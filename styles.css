@@ -1,0 +1,148 @@
+@charset "ISO-8859-1";
+
+h1 {
+	font-family: 'Roboto Condensed';
+	font-size: 64px; 
+	text-align: center;
+	color:white;
+	margin: 10px;
+}
+.banner{
+	background-color:#b22222;
+	
+}
+
+
+
+p{
+	color: white;
+}
+
+a{
+	color: white;
+	font-family: 'Roboto Condensed';
+
+}
+
+body {
+	font-family: 'Roboto Condensed';
+	color:white;
+ 	background-color: #282828;
+ 	height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+footer{
+	text-align: center;
+}
+.selector{
+	width: 250px;
+	height:20px;
+	border: 4px solid #aaa9ad;
+	border-radius: 10px;
+	padding: 10px;
+	margin: auto;
+}
+
+.options{
+	float:left;
+	padding: 10px;
+	margin: 5px;
+}
+
+
+  
+
+.randomMonitor{
+	overflow:hidden;
+	position: relative;
+    width: 100%;
+    height: 0.5;
+    padding-bottom: 56.25%;
+
+
+}
+
+.randomMonitor iframe{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bttn {
+  	font-family: 'Roboto Condensed';
+  	background-color:#b22222;
+	border-color:red;
+	border-radius:6px;
+	margin:10px;
+	padding: 20px;
+	font-size: 30px;
+	width:255px;
+	cursor: pointer;
+}
+
+.bttn:active {
+  background-color: #8e1b1b;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.buttons_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	
+}
+.btts_cat{
+	font-family: 'Roboto Condensed';
+	background-color:#b22222;
+	border-color:red;
+	border-width: 1px;
+	border-radius:6px;
+	margin:5px;
+	padding: 10px;
+}
+
+.buttons_container1{
+	width:100%;
+    padding: 10px;
+	margin:auto;
+	display: flex;
+  	flex-wrap: wrap;
+ 
+}
+
+.container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+  }
+  @media (min-width: 768px) {
+	.container {
+	  width: 750px;
+	}
+  }
+  @media (min-width: 992px) {
+	.container {
+	  width: 970px;
+	}
+  }
+  @media (min-width: 1200px) {
+	.container {
+	  width: 900px;
+	}
+  }
+
+.test {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+
+	text-align:center;
+}
+

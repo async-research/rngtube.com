@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>RNGTube-Discover random videos from the Internet</title>
+<link rel="icon" type="image/png" href="./images/four.png" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RNGTube">
+<meta name="google-site-verification"
+	content="qSmAr8L6iEyaVF2KbgjpgYhLDAJUsk_qHXRAPHiYqU8" />
+<meta name="description"
+	content="RNGTube is a tool to find videos on the internet at random. Stumble upon something unique.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#b22222"/>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+<link href='https://fonts.googleapis.com/css?family=Roboto Condensed'
+	rel='stylesheet'>
+<link rel="apple-touch-icon" href="./images/four.png">
+<script>
+var records = [];
+function operator(url, callback){
+	var anObj = new XMLHttpRequest();
+	anObj.onreadystatechange = function() {
+    if (anObj.readyState == 4 && anObj.status == 200) {
+      callback(anObj.responseText);
+      
+    }
+  };
+  anObj.open("GET", url, true);
+  anObj.send();
+}
+
+function getDeck(){
+	filter = document.getElementById('tag')
+    var url = 'controller.php?state=setup&filter='+filter.value;
+    operator(url, setDeck);
+}
+function setDeck(anObj){
+    arr = JSON.parse(anObj);
+    var categories = arr['categories'];
+    var options1 = document.getElementById('cats');
+  
+
+    options1.innerHTML = "<button id='Mix' value='Mix' onclick='setTag(this)' class='btts_cat'>Mix</button>";
+    
+    for (var i=0; i < categories.length; i++){       
+        options1.innerHTML += '<button id="' + categories[i]['category'] + '" value="' + categories[i]['category'] +  '" onclick="setTag(this)" class="btts_cat">' + categories[i]['category'] + '</button>'; 
+    }
+    
+    var tagButton = document.getElementById(filter.value)
+    tagButton.style.backgroundColor = "#6a1414";
+    console.log(arr["logo"]);
+    getVideos();
+    
+}
+
+
+function getVideos(newFilter=false) {
+	filter = document.getElementById('tag');
+    var url = 'controller.php?state=rolling&filter='+filter.value;
+  
+    if ((records.length === 0) || (newFilter)){
+    	records = [];
+    	console.log('SENT REQUEST TO SERVER: GETTING RECORDS.');
+    	operator(url, storeVideos);
+
+    }else{
+    	setVideo();
+    }
+   	
+} 
+
+function storeVideos(anObj){
+	console.log('SERVER RESPONDED.');
+	arr = JSON.parse(anObj);
+	for (var i=0; i < arr['arr'].length; i++){
+		records.push(arr['arr'][i]);
+	};
+	setVideo();
+
+}
+
+function setVideo(){
+	console.log(records.length);
+	var videoID = records.pop()['videoID'];
+    var query = "FUNNY STRING HERE";
+    var ytFrame = document.getElementById("ytFrame");
+    query = "https://www.youtube.com/embed/" + videoID + "?&autoplay=0&playsinline=1&modestbranding=1";
+    ytFrame.src = query;
+ 
+}
+
+function setTag(button){
+	var filter = document.getElementById('tag');
+	var prevButton = document.getElementById(filter.value);
+	prevButton.style.backgroundColor ="#b22222";
+
+	filter.value = button.value;
+	var currButton = document.getElementById(filter.value);
+	currButton.style.backgroundColor = "#6a1414";
+
+    getVideos(true);
+   
+}
+
+</script>
+</head>
+<body onload="getDeck()">
+	<div id='banner' class='banner'
+		style="padding: 10px; margin-bottom: 5px;">
+		<a href="./index.html"><img id="logo" class="img-responsive"
+			style="margin: auto; height: auto;" src="./images/rng_logo.png"
+			width="200" height="200" alt=""></a>
+
+	</div>
+
+	<div class="container">
+		<div id='monitor' class="embed-responsive embed-responsive-16by9">
+			<iframe id="ytFrame" class="embed-responsive-item" src="" allowfullscreen></iframe>
+		</div>
+		<!-- <div id='dbStats' style='font-size:1.2em;padding:15px; background-color:#b22222;height:50px;'></div> -->
+		
+		<div id='buttons_container' class='content'
+			style="text-align: center; padding-top: 15px;">
+			<button class='bttn' id='reroll' name='reroll' onclick="getVideos()">Reroll</button>
+		</div>
+	</div>
+
+	<input type='hidden' id='tag' name='tag' value='Mix' />
+	<div id='cats' class='container'
+		style="text-align: center; padding: 15px;"></div>
+	<div class="container">
+		<div id='debug'></div>
+		<div id='dbStats' class="container"
+			style='padding: 15px; margin: auto;'></div>
+		<div id="history"></div>
+	</div>
+
+
+</body>
+<footer>
+	<p>&copy; Copyright 2021 RNGTube</p>
+	<a href="./about.html">About</a>
+	<a href="./disclaimer.html">Disclaimer</a>
+	<a href="./index.html">Home</a>
+	
+	
+</footer>
+</html>
